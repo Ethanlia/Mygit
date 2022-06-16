@@ -17,9 +17,13 @@ int main(int argc, char *argv[])
     int connectfd = -1;
     int connfd = -1;
     char buff[QUECTEL_TIME_MAX_LEN];
+    char buff_msg[QUECTEL_TIME_MAX_LEN];
+
     struct sockaddr_in server_addr;
     struct sockaddr_in client_addr;
-    int n;connectfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
+
+    int n;
+    connectfd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
     
     if(connectfd < 0)
     {
@@ -46,12 +50,19 @@ int main(int argc, char *argv[])
     {
         printf("conect error:%s %d",strerror(errno), errno);
         exit(0);
+    }else
+    {
+        printf("hello ,This is %d\n",server_addr.sin_port);
+        snprintf( buff_msg, QUECTEL_TIME_MAX_LEN, "hello ,This is %d\r\n", server_addr.sin_port );
+        send(connectfd,buff_msg,QUECTEL_TIME_MAX_LEN,0);
+        
     }
     
     while( ( n = read(connectfd, buff, QUECTEL_TIME_MAX_LEN) ) )
     {
         buff[n] = 0;
         printf("%s\r\n",buff);
+        
     }
     
     if(n < 0)
