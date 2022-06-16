@@ -18,6 +18,8 @@ int main(int argc, char *argv[])
     int listenfd = -1;
     int connfd = -1;
     char buff[QUECTEL_TIME_MAX_LEN];
+    char buff_msg[QUECTEL_TIME_MAX_LEN];
+
     time_t ticks;
     struct sockaddr_in server_addr;
     struct sockaddr_in client_addr;
@@ -55,8 +57,11 @@ int main(int argc, char *argv[])
             exit(0);        
         }  
         ticks = time(NULL);
-        snprintf( buff, QUECTEL_TIME_MAX_LEN, "%.24s\r\n", ctime(&ticks) );
-        printf("buff=%s\r\n",buff);   
+        snprintf( buff, QUECTEL_TIME_MAX_LEN, "%s\r\n", ctime(&ticks) );
+        printf("buff=%s\r\n",buff);
+
+        recv(connfd,buff_msg,QUECTEL_TIME_MAX_LEN,0);
+        printf("%s",buff_msg);   
         
         write(connfd, buff, strlen(buff));
         close(connfd);
