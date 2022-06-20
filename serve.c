@@ -80,11 +80,11 @@ int main(int argc, char *argv[])
         int max_fd = connfd > STDIN_FILENO ? connfd : STDIN_FILENO ;
 
         struct timeval timeout = {
-            .tv_sec = 5 ,
+            .tv_sec = 20 ,
             .tv_usec = 0 
-        }; // 设置时间结构体为5秒
+        }; // 设置时间结构体为20秒
 
-        // 设置多路复用 监听标准输入以及已链接套接字   ， 超时设置为5秒
+        // 设置多路复用 监听标准输入以及已链接套接字   ， 超时设置为20秒
         int ret_val = select( max_fd + 1 , &set, NULL , NULL , &timeout);
         if (0 == ret_val)  // 超时
         {
