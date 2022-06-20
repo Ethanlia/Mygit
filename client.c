@@ -84,7 +84,7 @@ int main(int argc, char *argv[])
         struct timeval timeout = {
             .tv_sec = 20 ,
             .tv_usec = 0 
-        }; // 设置时间结构体为10秒
+        }; // 设置时间结构体为20秒
 
         // 设置多路复用 监听标准输入以及已链接套接字   ， 超时设置为20秒
         int ret_val = select( max_fd + 1 , &set, NULL , NULL , &timeout);
